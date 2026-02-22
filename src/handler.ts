@@ -88,8 +88,8 @@ export class LoadBalancer extends DurableObject {
 				} else if (response.status === 429) {
 					// Still getting 429, increment failed_count
 					const newFailedCount = failedCount + 1;
-					if (newFailedCount >= 5) {
-						// Delete the key if it has failed 5 times
+					if (newFailedCount >= 999999) {
+						// Delete the key if it has failed 999999 times
 						await this.ctx.storage.sql.exec('DELETE FROM api_keys WHERE api_key = ?', apiKey);
 					} else {
 						await this.ctx.storage.sql.exec(
